@@ -477,11 +477,93 @@ const CourseCreation = () => {
             ))}
           </div>
         </div>
+        <span className="bg-blue-200 text-blue-950 font-medium rounded-2xl h-4 w-10 ml-56">
+          <span className="m-3 items-center">+Add Row</span>
+        </span>
+      </div>
+      <div className="">
+        <div className="flex justify-between">
+          <h1 className="font-semibold ml-56  mt-5  text-xl">Course Tag</h1>
+          <span className="bg-blue-200 text-blue-950 h-6 mt-5 font-medium rounded-2xl my-4 mx-6">
+          <span className="m-3">+New Course Tag</span>
+        </span>
+        </div>
+
+        <div className="ml-56 grid grid-cols-2 m-6 justify-center bg-slate-100">
+          <div className="flex flex-col mt-3 mx-2">
+            <label>Tag </label>
+            <Select
+              label="Select Option"
+              name="additionalInfoSelectField"
+              id="additionalInfoSelectField"
+              sx={{ width: "80%", height: "40px", marginTop: "10px" }}
+            >
+              <MenuItem value="option1">Option 1</MenuItem>
+              <MenuItem value="option2">Option 2</MenuItem>
+              <MenuItem value="option3">Option 3</MenuItem>
+              {/* Add more options as needed */}
+            </Select>
+          </div>
+          <div className="flex flex-col mt-3 mx-4 my-3">
+            <label>Description </label>
+            {durationFields.map((field, index) => (
+              <div
+                key={field.id}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginTop: "8px",
+                }}
+              >
+                <input
+                  className="w-[80%] h-14 border border-gray-300 "
+                  value={field.value}
+                  onChange={(e) =>
+                    handleDurationChange(field.id, e.target.value)
+                  }
+                />
+                {index === 0 ? (
+                  // Show "+" button for the first input field
+                  <span
+                    className="bg-red-500 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
+                    onClick={handleAddDurationField}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="white"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                      />
+                    </svg>
+                  </span>
+                ) : (
+                  // Show "-" button for the rest of the input fields
+                  <span
+                    className="bg-red-500 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
+                    onClick={() => handleRemoveDurationField(field.id)}
+                  >
+                    -
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
         <span className="bg-blue-200 text-blue-950 font-medium rounded-2xl h-5 w-10 ml-56">
           <span className="m-3">+Add Row</span>
         </span>
       </div>
-      
+      <div className="flex justify-end p-4 m-5">
+        <button className="border border-gray-600 mx-1 w-24"><span className="m-4">Previous</span></button>
+        <button className="bg-blue-900 text-white mx-2 w-24">Next</button>
+      </div>
     </div>
   );
 };
