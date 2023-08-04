@@ -1,3 +1,23 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.line-through-center::before {
+    content: "";
+    width: 40%;
+    display: block;
+    position: absolute;
+    margin-left: 30%;
+    top: 50%; /* Position it in the center of the parent element */
+    left: 0;
+    right: 0;
+    color: rgb(107, 79, 79);
+    height: 1px; /* Adjust the height to set the thickness of the line */
+    background-color: rgb(119, 97, 97); /* Set the color of the line */
+    z-index: -1; /* Place it behind the other content */
+  }
+  
+  /* Apply the class to the parent container to draw the line */
+  .line-through-center {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
