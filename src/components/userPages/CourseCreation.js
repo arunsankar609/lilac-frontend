@@ -17,6 +17,7 @@ const CourseCreation = () => {
     intakeSelectField: "",
     durationFields: [{ id: 1, value: "" }],
     courseTagSelectField: "",
+    descriptionFields: "",
     courseTagDescription: "",
   });
   const handleSubmit = () => {
@@ -32,6 +33,7 @@ const CourseCreation = () => {
       durationFields,
       courseTagSelectField,
       courseTagDescription,
+      descriptionFields
     } = formData;
 
     // Create a string to display all the form values in the alert box
@@ -59,11 +61,18 @@ const CourseCreation = () => {
     setTag(e.target.value);
   };
 
-  const handleDescriptionChange = (index, e) => {
-    const newDescriptionFields = [...descriptionFields];
-    newDescriptionFields[index] = e.target.value;
-    setDescriptionFields(newDescriptionFields);
+  const handleDescriptionChange = (index, event) => {
+    const { value } = event.target;
+    setFormData((prevFormData) => {
+      const updatedDescriptionFields = [...prevFormData.descriptionFields];
+      updatedDescriptionFields[index] = value;
+      return {
+        ...prevFormData,
+        descriptionFields: updatedDescriptionFields,
+      };
+    });
   };
+  
 
   const handleAddRow = () => {
     setDescriptionFields([...descriptionFields, ""]);
@@ -216,6 +225,15 @@ const CourseCreation = () => {
       durationFields: updatedFields,
     }));
   };
+
+  const handleCourseTagDescriptionChange = (event) => {
+    const { value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      courseTagDescription: value,
+    }));
+  };
+  
 
   return (
     <div>
@@ -645,8 +663,9 @@ const CourseCreation = () => {
               >
                 <input
                   className="w-[80%] h-14 border border-gray-300"
-                  value={field}
-                  onChange={(e) => handleDescriptionChange(index, e)}
+                  value={formData.courseTagDescription}
+                  onChange={handleCourseTagDescriptionChange}
+                  
                 />
 
                 <span

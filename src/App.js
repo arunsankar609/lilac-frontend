@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserDetails from './components/userPages/UserDetails';
 import CourseCreation from './components/userPages/CourseCreation';
 import CollegePost from './components/userPages/CollegePost';
+import NotificationPage from './components/userPages/NotificationPage';
 
 function App() {
   const router = createBrowserRouter([
@@ -20,6 +21,10 @@ function App() {
     {
       path: "/post",
       element:<CollegePost/>,
+    },
+    {
+      path: "/notification",
+      element:<NotificationPage/>,
     },
   ]);
   return (
