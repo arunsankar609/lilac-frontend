@@ -1,11 +1,79 @@
 import React, { useState } from "react";
 import { Select, MenuItem } from "@mui/material";
+import { Link } from "react-router-dom";
 const CourseCreation = () => {
   const [documentFields, setDocumentFields] = useState([{ id: 1, value: "" }]);
   const [specializationFields, setSpecializationFields] = useState([
     { id: 1, value: "" },
   ]);
   const [durationFields, setDurationFields] = useState([{ id: 1, value: "" }]);
+  const [formData, setFormData] = useState({
+    additionalInfoSelectField: "",
+    servicesSelectField: "",
+    affiliationFields: [{ id: 1, value: "" }],
+    entranceFields: [{ id: 1, value: "" }],
+    documentFields: [{ id: 1, value: "" }],
+    specializationFields: [{ id: 1, value: "" }],
+    intakeSelectField: "",
+    durationFields: [{ id: 1, value: "" }],
+    courseTagSelectField: "",
+    courseTagDescription: "",
+  });
+  const handleSubmit = () => {
+    // Get all the form values from the state variables
+    const {
+      additionalInfoSelectField,
+      servicesSelectField,
+      affiliationFields,
+      entranceFields,
+      documentFields,
+      specializationFields,
+      intakeSelectField,
+      durationFields,
+      courseTagSelectField,
+      courseTagDescription,
+    } = formData;
+
+    // Create a string to display all the form values in the alert box
+    const formValuesString = `
+      Additional Info Select Field: ${additionalInfoSelectField}
+      Services Select Field: ${servicesSelectField}
+      Affiliation Fields: ${JSON.stringify(affiliationFields)}
+      Entrance Fields: ${JSON.stringify(entranceFields)}
+      Document Fields: ${JSON.stringify(documentFields)}
+      Specialization Fields: ${JSON.stringify(specializationFields)}
+      Intake Select Field: ${intakeSelectField}
+      Duration Fields: ${JSON.stringify(durationFields)}
+      Course Tag Select Field: ${courseTagSelectField}
+      Course Tag Description: ${courseTagDescription}
+    `;
+
+    // Display the form values in an alert box
+    alert(formValuesString);
+  };
+
+  const [tag, setTag] = useState("");
+  const [descriptionFields, setDescriptionFields] = useState([""]);
+
+  const handleTagChange = (e) => {
+    setTag(e.target.value);
+  };
+
+  const handleDescriptionChange = (index, e) => {
+    const newDescriptionFields = [...descriptionFields];
+    newDescriptionFields[index] = e.target.value;
+    setDescriptionFields(newDescriptionFields);
+  };
+
+  const handleAddRow = () => {
+    setDescriptionFields([...descriptionFields, ""]);
+  };
+
+  const handleRemoveRow = (index) => {
+    const newDescriptionFields = [...descriptionFields];
+    newDescriptionFields.splice(index, 1);
+    setDescriptionFields(newDescriptionFields);
+  };
 
   const handleAddDocumentField = () => {
     setDocumentFields((prevFields) => [
@@ -38,6 +106,12 @@ const CourseCreation = () => {
       field.id === id ? { ...field, value } : field
     );
     setDocumentFields(updatedFields);
+
+    // Update the formData state with the new documentFields
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      documentFields: updatedFields,
+    }));
   };
 
   const handleSpecializationChange = (id, value) => {
@@ -45,7 +119,14 @@ const CourseCreation = () => {
       field.id === id ? { ...field, value } : field
     );
     setSpecializationFields(updatedFields);
+
+    // Update the formData state with the new specializationFields
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      specializationFields: updatedFields,
+    }));
   };
+
   const [entranceFields, setEntranceFields] = useState([{ id: 1, value: "" }]);
 
   const handleAddEntranceField = () => {
@@ -66,6 +147,12 @@ const CourseCreation = () => {
       field.id === id ? { ...field, value } : field
     );
     setEntranceFields(updatedFields);
+
+    // Update the formData state with the new entranceFields
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      entranceFields: updatedFields,
+    }));
   };
   const [affiliationFields, setAffiliationFields] = useState([
     { id: 1, value: "" },
@@ -77,6 +164,18 @@ const CourseCreation = () => {
       { id: prevFields.length + 1, value: "" },
     ]);
   };
+  const handleAffiliationChange = (id, value) => {
+    const updatedFields = affiliationFields.map((field) =>
+      field.id === id ? { ...field, value } : field
+    );
+    setAffiliationFields(updatedFields);
+
+    // Update the formData state with the new affiliationFields
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      affiliationFields: updatedFields,
+    }));
+  };
 
   const handleRemoveAffiliationField = (id) => {
     setAffiliationFields((prevFields) =>
@@ -84,12 +183,6 @@ const CourseCreation = () => {
     );
   };
 
-  const handleAffiliationChange = (id, value) => {
-    const updatedFields = affiliationFields.map((field) =>
-      field.id === id ? { ...field, value } : field
-    );
-    setAffiliationFields(updatedFields);
-  };
   const handleAddDurationField = () => {
     setDurationFields((prevFields) => [
       ...prevFields,
@@ -108,6 +201,20 @@ const CourseCreation = () => {
       field.id === id ? { ...field, value } : field
     );
     setDurationFields(updatedFields);
+
+    const handleIntakeSelectChange = (event) => {
+      const selectedValue = event.target.value;
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        intakeSelectField: selectedValue,
+      }));
+    };
+
+    // Update the formData state with the new durationFields
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      durationFields: updatedFields,
+    }));
   };
 
   return (
@@ -122,7 +229,10 @@ const CourseCreation = () => {
           </span>
         </div>
         <div className="flex">
-          <button className="bg-blue-950 text-white rounded-2xl flex items-center">
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-950 text-white rounded-2xl flex items-center"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -248,10 +358,17 @@ const CourseCreation = () => {
             name="additionalInfoSelectField"
             id="additionalInfoSelectField"
             sx={{ width: "80%", height: "40px" }}
+            value={formData.additionalInfoSelectField} // Add this line
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                additionalInfoSelectField: e.target.value,
+              })
+            }
           >
-            <MenuItem value="option1">Option 1</MenuItem>
-            <MenuItem value="option2">Option 2</MenuItem>
-            <MenuItem value="option3">Option 3</MenuItem>
+            <MenuItem value="Admissions 1">Admissions 1</MenuItem>
+            <MenuItem value="Admissions 2">Admissions 2</MenuItem>
+            <MenuItem value="Admissions 3">Admissions 3</MenuItem>
             {/* Add more options as needed */}
           </Select>
         </div>
@@ -263,10 +380,14 @@ const CourseCreation = () => {
             name="additionalInfoSelectField"
             id="additionalInfoSelectField"
             sx={{ width: "80%", height: "40px" }}
+            value={formData.servicesSelectField} // Add this line
+            onChange={(e) =>
+              setFormData({ ...formData, servicesSelectField: e.target.value })
+            }
           >
-            <MenuItem value="option1">Option 1</MenuItem>
-            <MenuItem value="option2">Option 2</MenuItem>
-            <MenuItem value="option3">Option 3</MenuItem>
+            <MenuItem value="Services 1">Services 1</MenuItem>
+            <MenuItem value="Services 2">Services 2</MenuItem>
+            <MenuItem value="Services 3">Services 3</MenuItem>
             {/* Add more options as needed */}
           </Select>
         </div>
@@ -430,11 +551,18 @@ const CourseCreation = () => {
               label="Select Option"
               name="additionalInfoSelectField"
               id="additionalInfoSelectField"
+              value={formData.intakeSelectField}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  intakeSelectField: e.target.value,
+                })
+              }
               sx={{ width: "80%", height: "40px", marginTop: "10px" }}
             >
-              <MenuItem value="option1">Option 1</MenuItem>
-              <MenuItem value="option2">Option 2</MenuItem>
-              <MenuItem value="option3">Option 3</MenuItem>
+              <MenuItem value="Intake1">Intake 1</MenuItem>
+              <MenuItem value="Intake2">Intake 2</MenuItem>
+              <MenuItem value="Intake3">Intake 3</MenuItem>
               {/* Add more options as needed */}
             </Select>
           </div>
@@ -482,33 +610,33 @@ const CourseCreation = () => {
         </span>
       </div>
       <div className="">
-        <div className="flex justify-between">
-          <h1 className="font-semibold ml-56  mt-5  text-xl">Course Tag</h1>
-          <span className="bg-blue-200 text-blue-950 h-6 mt-5 font-medium rounded-2xl my-4 mx-6">
-          <span className="m-3">+New Course Tag</span>
-        </span>
-        </div>
-
+        <h1 className="font-semibold ml-56 mt-5 text-xl">Course Tag</h1>
         <div className="ml-56 grid grid-cols-2 m-6 justify-center bg-slate-100">
           <div className="flex flex-col mt-3 mx-2">
             <label>Tag </label>
-            <Select
-              label="Select Option"
-              name="additionalInfoSelectField"
-              id="additionalInfoSelectField"
-              sx={{ width: "80%", height: "40px", marginTop: "10px" }}
+            <select
+              value={formData.courseTagSelectField}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  courseTagSelectField: e.target.value,
+                })
+              }
+              name="courseSelectionField"
+              id="courseSelectionField"
+              style={{ width: "80%", height: "40px", marginTop: "10px" }}
             >
-              <MenuItem value="option1">Option 1</MenuItem>
-              <MenuItem value="option2">Option 2</MenuItem>
-              <MenuItem value="option3">Option 3</MenuItem>
+              <option value="Tag1">Tag 1</option>
+              <option value="Tag2">Tag 2</option>
+              <option value="Tag3">Tag 3</option>
               {/* Add more options as needed */}
-            </Select>
+            </select>
           </div>
           <div className="flex flex-col mt-3 mx-4 my-3">
             <label>Description </label>
-            {durationFields.map((field, index) => (
+            {descriptionFields.map((field, index) => (
               <div
-                key={field.id}
+                key={index}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -516,53 +644,33 @@ const CourseCreation = () => {
                 }}
               >
                 <input
-                  className="w-[80%] h-14 border border-gray-300 "
-                  value={field.value}
-                  onChange={(e) =>
-                    handleDurationChange(field.id, e.target.value)
-                  }
+                  className="w-[80%] h-14 border border-gray-300"
+                  value={field}
+                  onChange={(e) => handleDescriptionChange(index, e)}
                 />
-                {index === 0 ? (
-                  // Show "+" button for the first input field
-                  <span
-                    className="bg-red-500 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
-                    onClick={handleAddDurationField}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="white"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                      />
-                    </svg>
-                  </span>
-                ) : (
-                  // Show "-" button for the rest of the input fields
-                  <span
-                    className="bg-red-500 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
-                    onClick={() => handleRemoveDurationField(field.id)}
-                  >
-                    -
-                  </span>
-                )}
+
+                <span
+                  className="bg-red-500 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
+                  onClick={() => handleRemoveRow(index)}
+                >
+                  -
+                </span>
               </div>
             ))}
           </div>
         </div>
-        <span className="bg-blue-200 text-blue-950 font-medium rounded-2xl h-5 w-10 ml-56">
-          <span className="m-3">+Add Row</span>
+        <span className="bg-blue-200 text-blue-950 font-medium rounded-2xl h-4 w-10 ml-56">
+          <span className="m-3 items-center">+Add Row</span>
         </span>
       </div>
+
       <div className="flex justify-end p-4 m-5">
-        <button className="border border-gray-600 mx-1 w-24"><span className="m-4">Previous</span></button>
-        <button className="bg-blue-900 text-white mx-2 w-24">Next</button>
+        <button className="border border-gray-600 mx-1 w-24">
+          <span className="m-4">Previous</span>
+        </button>
+        <Link to="/post">
+          <button className="bg-blue-900 text-white mx-2 w-24">Next</button>
+        </Link>
       </div>
     </div>
   );
