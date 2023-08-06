@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Select, MenuItem } from "@mui/material";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 const CourseCreation = () => {
   const navigate = useNavigate();
   const [documentFields, setDocumentFields] = useState([{ id: 1, value: "" }]);
@@ -103,8 +105,31 @@ const CourseCreation = () => {
       Course Tag Select Field: ${courseTagSelectField}
       Course Tag Description: ${courseTagDescription}
     `;
-
+    console.log(formValuesString);
     alert(formValuesString);
+    //****if you want get submitted data- axios.get('http://localhost:8080/api/v1/users/getcourses')*****//
+    axios
+      .post("http://localhost:8080/api/v1/users/courses", formData)
+      .then((response) => {
+        toast.success("Course Details added to DB successfully!", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      })
+      .catch((error) => {
+        toast.error(error, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      });
     setFormData({
       additionalInfoSelectField: "",
       servicesSelectField: "",
@@ -122,12 +147,6 @@ const CourseCreation = () => {
   };
 
   const [descriptionFields, setDescriptionFields] = useState([""]);
-
-  const handleRemoveRow = (index) => {
-    const newDescriptionFields = [...descriptionFields];
-    newDescriptionFields.splice(index, 1);
-    setDescriptionFields(newDescriptionFields);
-  };
 
   const handleAddDocumentField = () => {
     setDocumentFields((prevFields) => [

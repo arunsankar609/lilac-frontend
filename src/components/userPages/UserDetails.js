@@ -37,7 +37,7 @@ const UserDetails = () => {
             />
           ))
         ) : (
-          <p>Loading...</p>
+          <p className="font-semibold">Loading...</p>
         )}
       </div>
       <Outlet />

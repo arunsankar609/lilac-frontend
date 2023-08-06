@@ -1,53 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { notification } from "../constants/notifications";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const CollegePost = () => {
   const [comment, setComment] = useState("");
   const [newReply, setNewReply] = useState({ name: "", message: "" });
   const [newComment, setNewComment] = useState({ name: "", comment: "" });
-  const commentsData1 = [
-    {
-      _id: 1,
-      name: "John Doe",
-      profilePic:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
-      comment: "This is a great art piece!",
-      replies: [
-        {
-          _id: 101,
-          name: "Jane Smith",
-          profilePic:
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
-          message: "I agree, it's fantastic!",
-        },
-        {
-          _id: 102,
-          name: "Alex Johnson",
-          profilePic:
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
-          message: "Absolutely stunning!",
-        },
-      ],
-    },
-    {
-      _id: 2,
-      name: "Alice Cooper",
-      profilePic:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
-      comment: "Love the colors used in this artwork.",
-      replies: [
-        {
-          _id: 201,
-          name: "Eve Adams",
-          profilePic:
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
-          message: "Yes, the colors are so vibrant!",
-        },
-      ],
-    },
-  ];
+  const [commentsData, setCommentsData] = useState(null);
   const [showReplies, setShowReplies] = useState({});
-
+  const getCommentData = () => {
+    axios.get("http://localhost:8080/api/v1/users/getcomments").then((data) => {
+      console.log("zzzz", data.data.comments);
+      setCommentsData(data.data.comments);
+    });
+  };
+  useEffect(() => {
+    getCommentData();
+  }, []);
   const toggleRepliesVisibility = (commentId) => {
     setShowReplies((prevShowReplies) => ({
       ...prevShowReplies,
@@ -64,7 +33,7 @@ const CollegePost = () => {
       [name]: value,
     }));
   };
-  const [commentsData, setCommentsData] = useState(commentsData1);
+
   const handleSubmitReply = (event, commentId) => {
     event.preventDefault();
     const commentIndex = commentsData.findIndex(
@@ -204,7 +173,7 @@ const CollegePost = () => {
         </div>
         <div>
           <h1 className="text-sm mb-4">view 5 more comments</h1>
-          {commentsData.map((comment) => (
+          {commentsData?.map((comment) => (
             <div
               key={comment._id}
               className="border border-gray-300 p-4 mb-4 rounded-md"

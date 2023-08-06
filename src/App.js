@@ -1,6 +1,8 @@
 
 import './App.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 import UserDetails from './components/userPages/UserDetails';
 import CourseCreation from './components/userPages/CourseCreation';
 import CollegePost from './components/userPages/CollegePost';
@@ -26,10 +28,12 @@ function App() {
       path: "/notification",
       element:<NotificationPage/>,
     },
+    
   ]);
   return (
     <div className="App">
      <RouterProvider router={router} />
+     <ToastContainer /> 
     </div>
   );
 }
