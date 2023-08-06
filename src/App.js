@@ -29,7 +29,6 @@ function App() {
   ]);
   return (
     <div className="App">
-     <h1 className='font-bold text-2xl'>U got this arun</h1>
      <RouterProvider router={router} />
     </div>
   );

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Select, MenuItem } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 const CourseCreation = () => {
+  const navigate = useNavigate();
   const [documentFields, setDocumentFields] = useState([{ id: 1, value: "" }]);
   const [specializationFields, setSpecializationFields] = useState([
     { id: 1, value: "" },
   ]);
+ 
+
   const [durationFields, setDurationFields] = useState([{ id: 1, value: "" }]);
   const [formData, setFormData] = useState({
     additionalInfoSelectField: "",
@@ -20,8 +24,20 @@ const CourseCreation = () => {
     descriptionFields: "",
     courseTagDescription: "",
   });
+  const [validationErrors, setValidationErrors] = useState({
+    additionalInfoSelectField: "",
+    servicesSelectField: "",
+    affiliationFields: [],
+    entranceFields: [],
+    documentFields: [],
+    specializationFields: [],
+    intakeSelectField: "",
+    durationFields: [],
+    courseTagSelectField: "",
+    courseTagDescription: "",
+  });
+
   const handleSubmit = () => {
-    // Get all the form values from the state variables
     const {
       additionalInfoSelectField,
       servicesSelectField,
@@ -33,10 +49,51 @@ const CourseCreation = () => {
       durationFields,
       courseTagSelectField,
       courseTagDescription,
-      descriptionFields
     } = formData;
 
-    // Create a string to display all the form values in the alert box
+    setValidationErrors({
+      additionalInfoSelectField: "",
+      servicesSelectField: "",
+      affiliationFields: [],
+      entranceFields: [],
+      documentFields: [],
+      specializationFields: [],
+      intakeSelectField: "",
+      durationFields: [],
+      courseTagSelectField: "",
+      courseTagDescription: "",
+    });
+
+    // Validate form fields
+    let isValid = true;
+
+    // Perform validation checks for each field and update validationErrors
+    if (formData.additionalInfoSelectField === "") {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        additionalInfoSelectField: "This Admission field is required.",
+      }));
+      isValid = false;
+    }
+    if (formData.servicesSelectField === "") {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        servicesSelectField: "This Services field is required.",
+      }));
+      isValid = false;
+    }
+    if (formData.affiliationFields.value === "") {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        affiliationFields: "Add atleast one Affiliation.",
+      }));
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return;
+    }
+
     const formValuesString = `
       Additional Info Select Field: ${additionalInfoSelectField}
       Services Select Field: ${servicesSelectField}
@@ -50,33 +107,25 @@ const CourseCreation = () => {
       Course Tag Description: ${courseTagDescription}
     `;
 
-    // Display the form values in an alert box
     alert(formValuesString);
-  };
-
-  const [tag, setTag] = useState("");
-  const [descriptionFields, setDescriptionFields] = useState([""]);
-
-  const handleTagChange = (e) => {
-    setTag(e.target.value);
-  };
-
-  const handleDescriptionChange = (index, event) => {
-    const { value } = event.target;
-    setFormData((prevFormData) => {
-      const updatedDescriptionFields = [...prevFormData.descriptionFields];
-      updatedDescriptionFields[index] = value;
-      return {
-        ...prevFormData,
-        descriptionFields: updatedDescriptionFields,
-      };
+    setFormData({
+      additionalInfoSelectField: "",
+      servicesSelectField: "",
+      affiliationFields: [{ id: 1, value: "" }],
+      entranceFields: [{ id: 1, value: "" }],
+      documentFields: [{ id: 1, value: "" }],
+      specializationFields: [{ id: 1, value: "" }],
+      intakeSelectField: "",
+      durationFields: [{ id: 1, value: "" }],
+      courseTagSelectField: "",
+      courseTagDescription: "",
+      descriptionFields: "",
     });
+    navigate('/post');
+   
   };
-  
 
-  const handleAddRow = () => {
-    setDescriptionFields([...descriptionFields, ""]);
-  };
+  const [descriptionFields, setDescriptionFields] = useState([""]);
 
   const handleRemoveRow = (index) => {
     const newDescriptionFields = [...descriptionFields];
@@ -211,14 +260,6 @@ const CourseCreation = () => {
     );
     setDurationFields(updatedFields);
 
-    const handleIntakeSelectChange = (event) => {
-      const selectedValue = event.target.value;
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        intakeSelectField: selectedValue,
-      }));
-    };
-
     // Update the formData state with the new durationFields
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -233,7 +274,6 @@ const CourseCreation = () => {
       courseTagDescription: value,
     }));
   };
-  
 
   return (
     <div>
@@ -389,6 +429,12 @@ const CourseCreation = () => {
             <MenuItem value="Admissions 3">Admissions 3</MenuItem>
             {/* Add more options as needed */}
           </Select>
+
+          {validationErrors.additionalInfoSelectField && (
+            <span className="text-red-500 mt-1">
+              {validationErrors.additionalInfoSelectField}
+            </span>
+          )}
         </div>
 
         <div className="flex flex-col mt-3">
@@ -408,6 +454,11 @@ const CourseCreation = () => {
             <MenuItem value="Services 3">Services 3</MenuItem>
             {/* Add more options as needed */}
           </Select>
+          {validationErrors.servicesSelectField && (
+            <span className="text-red-500 mt-1">
+              {validationErrors.servicesSelectField}
+            </span>
+          )}
         </div>
         <div className="flex flex-col mt-3">
           <label>Course Affiliation *</label>
@@ -427,6 +478,12 @@ const CourseCreation = () => {
                   handleAffiliationChange(field.id, e.target.value)
                 }
               />
+               {validationErrors.affiliationFields && (
+              <span className="text-red-500 mt-1">
+                {validationErrors.affiliationFields}
+              </span>
+            )}
+             
               {index === 0 ? (
                 // Show "+" button for the first input field
                 <span
@@ -445,7 +502,9 @@ const CourseCreation = () => {
                 </span>
               )}
             </div>
+            
           ))}
+         
         </div>
 
         <div className="flex flex-col mt-3">
@@ -665,15 +724,9 @@ const CourseCreation = () => {
                   className="w-[80%] h-14 border border-gray-300"
                   value={formData.courseTagDescription}
                   onChange={handleCourseTagDescriptionChange}
-                  
                 />
 
-                <span
-                  className="bg-red-500 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
-                  onClick={() => handleRemoveRow(index)}
-                >
-                  -
-                </span>
+               
               </div>
             ))}
           </div>
