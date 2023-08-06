@@ -67,55 +67,46 @@ const CollegePost = () => {
   const [commentsData, setCommentsData] = useState(commentsData1);
   const handleSubmitReply = (event, commentId) => {
     event.preventDefault();
-    // Find the corresponding comment
     const commentIndex = commentsData.findIndex(
       (comment) => comment._id === commentId
     );
 
     if (commentIndex !== -1) {
-      // Clone the comment and its replies to avoid mutating the original data
       const updatedComment = { ...commentsData[commentIndex] };
 
-      // Create the new reply object
       const newReplyObj = {
-        _id: Date.now(), // A simple way to generate a unique ID (not ideal for production)
+        _id: Date.now(),
         name: "Arun Sankar",
         profilePic:
           "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
         message: newReply.message,
       };
 
-      // Push the new reply to the cloned comment's replies array
       updatedComment.replies.push(newReplyObj);
 
-      // Create a new array with the updated comment and update the state
       const updatedCommentsData = [...commentsData];
       updatedCommentsData[commentIndex] = updatedComment;
 
-      // Update the state with the new data
       setCommentsData(updatedCommentsData);
     }
 
-    // Clear the reply fields after submitting
     setNewReply({ name: "", message: "" });
   };
 
   const handleSubmitComment = (event) => {
     event.preventDefault();
-    // Create the new comment object
+
     const newCommentObj = {
-      _id: Date.now(), // A simple way to generate a unique ID (not ideal for production)
+      _id: Date.now(),
       name: "Arun Sankar",
       profilePic:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
       comment: comment,
-      replies: [], // Initialize an empty array for the replies of the new comment
+      replies: [],
     };
 
-    // Update the state with the new comment added to the commentsData
     setCommentsData((prevCommentsData) => [newCommentObj, ...prevCommentsData]);
 
-    // Clear the comment fields after submitting
     setNewComment({ name: "", comment: "" });
     setComment("");
   };
@@ -149,7 +140,6 @@ const CollegePost = () => {
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  {/* Updated path to represent a globe icon */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

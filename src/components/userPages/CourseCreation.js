@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Select, MenuItem } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 const CourseCreation = () => {
   const navigate = useNavigate();
@@ -8,7 +8,6 @@ const CourseCreation = () => {
   const [specializationFields, setSpecializationFields] = useState([
     { id: 1, value: "" },
   ]);
- 
 
   const [durationFields, setDurationFields] = useState([{ id: 1, value: "" }]);
   const [formData, setFormData] = useState({
@@ -64,10 +63,8 @@ const CourseCreation = () => {
       courseTagDescription: "",
     });
 
-    // Validate form fields
     let isValid = true;
 
-    // Perform validation checks for each field and update validationErrors
     if (formData.additionalInfoSelectField === "") {
       setValidationErrors((prevErrors) => ({
         ...prevErrors,
@@ -121,8 +118,7 @@ const CourseCreation = () => {
       courseTagDescription: "",
       descriptionFields: "",
     });
-    navigate('/post');
-   
+    navigate("/post");
   };
 
   const [descriptionFields, setDescriptionFields] = useState([""]);
@@ -165,7 +161,6 @@ const CourseCreation = () => {
     );
     setDocumentFields(updatedFields);
 
-    // Update the formData state with the new documentFields
     setFormData((prevFormData) => ({
       ...prevFormData,
       documentFields: updatedFields,
@@ -178,7 +173,6 @@ const CourseCreation = () => {
     );
     setSpecializationFields(updatedFields);
 
-    // Update the formData state with the new specializationFields
     setFormData((prevFormData) => ({
       ...prevFormData,
       specializationFields: updatedFields,
@@ -206,7 +200,6 @@ const CourseCreation = () => {
     );
     setEntranceFields(updatedFields);
 
-    // Update the formData state with the new entranceFields
     setFormData((prevFormData) => ({
       ...prevFormData,
       entranceFields: updatedFields,
@@ -228,7 +221,6 @@ const CourseCreation = () => {
     );
     setAffiliationFields(updatedFields);
 
-    // Update the formData state with the new affiliationFields
     setFormData((prevFormData) => ({
       ...prevFormData,
       affiliationFields: updatedFields,
@@ -260,7 +252,6 @@ const CourseCreation = () => {
     );
     setDurationFields(updatedFields);
 
-    // Update the formData state with the new durationFields
     setFormData((prevFormData) => ({
       ...prevFormData,
       durationFields: updatedFields,
@@ -427,7 +418,6 @@ const CourseCreation = () => {
             <MenuItem value="Admissions 1">Admissions 1</MenuItem>
             <MenuItem value="Admissions 2">Admissions 2</MenuItem>
             <MenuItem value="Admissions 3">Admissions 3</MenuItem>
-            {/* Add more options as needed */}
           </Select>
 
           {validationErrors.additionalInfoSelectField && (
@@ -444,7 +434,7 @@ const CourseCreation = () => {
             name="additionalInfoSelectField"
             id="additionalInfoSelectField"
             sx={{ width: "80%", height: "40px" }}
-            value={formData.servicesSelectField} // Add this line
+            value={formData.servicesSelectField}
             onChange={(e) =>
               setFormData({ ...formData, servicesSelectField: e.target.value })
             }
@@ -452,7 +442,6 @@ const CourseCreation = () => {
             <MenuItem value="Services 1">Services 1</MenuItem>
             <MenuItem value="Services 2">Services 2</MenuItem>
             <MenuItem value="Services 3">Services 3</MenuItem>
-            {/* Add more options as needed */}
           </Select>
           {validationErrors.servicesSelectField && (
             <span className="text-red-500 mt-1">
@@ -478,14 +467,13 @@ const CourseCreation = () => {
                   handleAffiliationChange(field.id, e.target.value)
                 }
               />
-               {validationErrors.affiliationFields && (
-              <span className="text-red-500 mt-1">
-                {validationErrors.affiliationFields}
-              </span>
-            )}
-             
+              {validationErrors.affiliationFields && (
+                <span className="text-red-500 mt-1">
+                  {validationErrors.affiliationFields}
+                </span>
+              )}
+
               {index === 0 ? (
-                // Show "+" button for the first input field
                 <span
                   className="bg-blue-300 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
                   onClick={handleAddAffiliationField}
@@ -493,7 +481,6 @@ const CourseCreation = () => {
                   +
                 </span>
               ) : (
-                // Show "-" button for the rest of the input fields
                 <span
                   className="bg-red-500 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
                   onClick={() => handleRemoveAffiliationField(field.id)}
@@ -502,9 +489,7 @@ const CourseCreation = () => {
                 </span>
               )}
             </div>
-            
           ))}
-         
         </div>
 
         <div className="flex flex-col mt-3">
@@ -524,7 +509,6 @@ const CourseCreation = () => {
                 onChange={(e) => handleEntranceChange(field.id, e.target.value)}
               />
               {index === 0 ? (
-                // Show "+" button for the first input field
                 <span
                   className="bg-blue-300 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
                   onClick={handleAddEntranceField}
@@ -532,7 +516,6 @@ const CourseCreation = () => {
                   +
                 </span>
               ) : (
-                // Show "-" button for the rest of the input fields
                 <span
                   className="bg-red-500 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
                   onClick={() => handleRemoveEntranceField(field.id)}
@@ -560,7 +543,6 @@ const CourseCreation = () => {
                 onChange={(e) => handleDocumentChange(field.id, e.target.value)}
               />
               {index === 0 ? (
-                // Show "+" button for the first input field
                 <span
                   className="bg-blue-300 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
                   onClick={handleAddDocumentField}
@@ -568,7 +550,6 @@ const CourseCreation = () => {
                   +
                 </span>
               ) : (
-                // Show "-" button for the rest of the input fields
                 <span
                   className="bg-red-500 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
                   onClick={() => handleRemoveDocumentField(field.id)}
@@ -599,7 +580,6 @@ const CourseCreation = () => {
                 }
               />
               {index === 0 ? (
-                // Show "+" button for the first input field
                 <span
                   className="bg-blue-300 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
                   onClick={handleAddSpecializationField}
@@ -607,7 +587,6 @@ const CourseCreation = () => {
                   +
                 </span>
               ) : (
-                // Show "-" button for the rest of the input fields
                 <span
                   className="bg-red-500 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
                   onClick={() => handleRemoveSpecializationField(field.id)}
@@ -640,7 +619,6 @@ const CourseCreation = () => {
               <MenuItem value="Intake1">Intake 1</MenuItem>
               <MenuItem value="Intake2">Intake 2</MenuItem>
               <MenuItem value="Intake3">Intake 3</MenuItem>
-              {/* Add more options as needed */}
             </Select>
           </div>
           <div className="flex flex-col mt-3 mx-4 my-3">
@@ -662,7 +640,6 @@ const CourseCreation = () => {
                   }
                 />
                 {index === 0 ? (
-                  // Show "+" button for the first input field
                   <span
                     className="bg-blue-300 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
                     onClick={handleAddDurationField}
@@ -670,7 +647,6 @@ const CourseCreation = () => {
                     +
                   </span>
                 ) : (
-                  // Show "-" button for the rest of the input fields
                   <span
                     className="bg-red-500 h-14 w-14 flex items-center justify-center text-xl cursor-pointer"
                     onClick={() => handleRemoveDurationField(field.id)}
@@ -706,7 +682,6 @@ const CourseCreation = () => {
               <option value="Tag1">Tag 1</option>
               <option value="Tag2">Tag 2</option>
               <option value="Tag3">Tag 3</option>
-              {/* Add more options as needed */}
             </select>
           </div>
           <div className="flex flex-col mt-3 mx-4 my-3">
@@ -725,8 +700,6 @@ const CourseCreation = () => {
                   value={formData.courseTagDescription}
                   onChange={handleCourseTagDescriptionChange}
                 />
-
-               
               </div>
             ))}
           </div>
