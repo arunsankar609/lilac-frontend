@@ -286,9 +286,9 @@ const CourseCreation = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-around border-b p-2 border-gray-300 ">
-        <div className="flex mr-48">
+    <div className="grid">
+      <div className="flex justify-around border-b p-2 border-gray-300 grid-cols-2  ">
+        <div className="flex">
           <h2 className="font-semibold text-2xl text-gray-800">
             Course Creation
           </h2>
@@ -296,7 +296,7 @@ const CourseCreation = () => {
             <span className="m-3">Step 2 of 4</span>
           </span>
         </div>
-        <div className="flex">
+        <div className="flex ">
           <button
             onClick={handleSubmit}
             className="bg-blue-950 text-white rounded-2xl flex items-center"
@@ -334,7 +334,7 @@ const CourseCreation = () => {
         </div>
       </div>
       <div className="flex justify-center m-10 space-x-12  line-through-center">
-        <div className="flex items-center justify-center flex-col ">
+        <div className="flex items-center justify-center flex-col  ">
           <span className="bg-blue-200 rounded-3xl ">
             {" "}
             <svg
@@ -414,11 +414,11 @@ const CourseCreation = () => {
           <span>Scholar ship</span>
         </div>
       </div>
-      <div className="ml-56">
+      <div className="grid justify-start px-6">
         <h1 className="font-semibold text-3xl">Additonal information</h1>
       </div>
 
-      <div className="ml-56 grid grid-cols-2 justify-center">
+      <div className="grid extrasm:grid-cols-1 desktop:grid-cols-2  extrasm:px-6 ">
         <div className="flex flex-col mt-3">
           <label>Admissions *</label>
           <Select
@@ -618,8 +618,8 @@ const CourseCreation = () => {
         </div>
       </div>
       <div className="">
-        <h1 className="font-semibold ml-56  mt-5  text-xl">Intakes</h1>
-        <div className="ml-56 grid grid-cols-2 m-6 justify-center bg-slate-100">
+        <h1 className="font-semibold  mt-5 px-6 text-xl">Intakes</h1>
+        <div className="grid extrasm:grid-cols-1 desktop:grid-cols-2 m-6 justify-center bg-slate-100">
           <div className="flex flex-col mt-3 mx-2">
             <label>Intake *</label>
             <Select
@@ -677,13 +677,13 @@ const CourseCreation = () => {
             ))}
           </div>
         </div>
-        <span className="bg-blue-200 text-blue-950 font-medium rounded-2xl h-4 w-10 ml-56">
+        <span className="bg-blue-200 mx-6 text-blue-950  font-medium rounded-2xl h-4 w-10">
           <span className="m-3 items-center">+Add Row</span>
         </span>
       </div>
       <div className="">
-        <h1 className="font-semibold ml-56 mt-5 text-xl">Course Tag</h1>
-        <div className="ml-56 grid grid-cols-2 m-6 justify-center bg-slate-100">
+        <h1 className="font-semibold mt-5 text-xl px-6">Course Tag</h1>
+        <div className="grid extrasm:grid-cols-1 desktop:grid-cols-2 m-6 justify-center bg-slate-100">
           <div className="flex flex-col mt-3 mx-2">
             <label>Tag </label>
             <select
@@ -723,7 +723,7 @@ const CourseCreation = () => {
             ))}
           </div>
         </div>
-        <span className="bg-blue-200 text-blue-950 font-medium rounded-2xl h-4 w-10 ml-56">
+        <span className="bg-blue-200 mx-6 text-blue-950 font-medium rounded-2xl h-4 w-10">
           <span className="m-3 items-center">+Add Row</span>
         </span>
       </div>

@@ -6,8 +6,8 @@ const NotificationPage = () => {
   const [notificationData, setNotificationData] = useState(notification);
 
   return (
-    <div className="flex justify-center items-center h-screen mt-6">
-      <div className="m-2 p-2 w-8/12 border border-gray-500 rounded-md h-full">
+    <div className="flex justify-center items-center h-[100vh] mt-6">
+      <div className="m-2 p-2 w-8/12 rounded-md h-[100vh]">
         <h1 className="text-blue-800 border border-blue-600 w-fit my-4 rounded-2xl">
           <Link to="/">
             <span className="m-2">Home</span>

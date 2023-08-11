@@ -22,7 +22,7 @@ const UserDetails = () => {
 
   return (
     <div>
-      <div className="flex m-3 p-3 justify-center flex-wrap">
+      <div className="flex mx-3 p-3 my-5 justify-center flex-wrap">
         {userData ? (
           userData.map((user) => (
             <Cards
